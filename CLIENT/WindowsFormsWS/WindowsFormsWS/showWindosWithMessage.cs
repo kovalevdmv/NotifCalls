@@ -5,7 +5,9 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Media;
+using System.Speech.Synthesis;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -21,12 +23,34 @@ namespace WindowsFormsWS
         SoundPlayer sp;
         public string respons = "";
         public Form1 own;
+        public bool Speech;
+        public Form1.Message mes;
+        bool Speeching = true;
+        SpeechSynthesizer synth;
+
+        async Task SpeakAsync()
+        {
+            synth = new SpeechSynthesizer();
+            synth.SelectVoiceByHints(VoiceGender.Female);
+            synth.Rate = 3;
+            while (Speeching)
+            {
+                synth.SpeakAsync($"Сообщение от {mes.sender}. {mes.text}");
+                await Task.Delay(1000);
+            }
+        }
 
         private void showWindosWithMessage_Load(object sender, EventArgs e)
         {
             sp = new SoundPlayer("ring1.wav");
-            sp.Load();
-            sp.PlayLooping();
+            if (!Speech)
+            {
+                sp.Load();
+                sp.PlayLooping();
+            } else {
+
+                SpeakAsync();
+            }
 
             timer1.Enabled = true;
             timer1.Start();
@@ -37,11 +61,17 @@ namespace WindowsFormsWS
         private void btnStopSound_Click(object sender, EventArgs e)
         {
             sp.Stop();
+            Speeching = false;
+            
+            synth?.Pause();
         }
 
         private void showWindosWithMessage_FormClosing(object sender, FormClosingEventArgs e)
         {
             sp.Stop();
+            Speeching = false;
+            synth?.Pause();
+
         }
 
         private void buttonReson2_Click(object sender, EventArgs e)
@@ -105,6 +135,13 @@ namespace WindowsFormsWS
         {
             respons = "Отвечу как только так сразу";
             own.ClosingFormMessage(this);
+        }
+
+        private void buttonClose_Click(object sender, EventArgs e)
+        {
+            respons = "Сообщение закрыто без ответа";
+            own.ClosingFormMessage(this);
+
         }
     }
 }

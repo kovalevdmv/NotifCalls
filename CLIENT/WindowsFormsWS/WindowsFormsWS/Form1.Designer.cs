@@ -33,6 +33,7 @@
             this.buttonConnect = new System.Windows.Forms.Button();
             this.nick = new System.Windows.Forms.TextBox();
             this.TableClients = new System.Windows.Forms.DataGridView();
+            this.nickname = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.btnToTray = new System.Windows.Forms.Button();
@@ -52,7 +53,7 @@
             this.labelErr = new System.Windows.Forms.Label();
             this.textHistory = new System.Windows.Forms.RichTextBox();
             this.button4 = new System.Windows.Forms.Button();
-            this.nickname = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.buttonSendAnyText = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.TableClients)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -92,6 +93,13 @@
             this.TableClients.TabIndex = 8;
             this.TableClients.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.TableClients_CellEnter);
             this.TableClients.Click += new System.EventHandler(this.TableClients_Click);
+            // 
+            // nickname
+            // 
+            this.nickname.HeaderText = "Имя";
+            this.nickname.Name = "nickname";
+            this.nickname.ReadOnly = true;
+            this.nickname.Width = 400;
             // 
             // imageList1
             // 
@@ -222,7 +230,7 @@
             // button3
             // 
             this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button3.Location = new System.Drawing.Point(595, 187);
+            this.button3.Location = new System.Drawing.Point(595, 282);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(206, 23);
             this.button3.TabIndex = 20;
@@ -267,18 +275,22 @@
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
-            // nickname
+            // buttonSendAnyText
             // 
-            this.nickname.HeaderText = "Имя";
-            this.nickname.Name = "nickname";
-            this.nickname.ReadOnly = true;
-            this.nickname.Width = 400;
+            this.buttonSendAnyText.Location = new System.Drawing.Point(595, 164);
+            this.buttonSendAnyText.Name = "buttonSendAnyText";
+            this.buttonSendAnyText.Size = new System.Drawing.Size(206, 23);
+            this.buttonSendAnyText.TabIndex = 24;
+            this.buttonSendAnyText.Text = "Отправить произвольный текст";
+            this.buttonSendAnyText.UseVisualStyleBackColor = true;
+            this.buttonSendAnyText.Click += new System.EventHandler(this.buttonSendAnyText_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(813, 420);
+            this.Controls.Add(this.buttonSendAnyText);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.textHistory);
             this.Controls.Add(this.labelErr);
@@ -335,6 +347,7 @@
         private System.Windows.Forms.RichTextBox textHistory;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.DataGridViewTextBoxColumn nickname;
+        private System.Windows.Forms.Button buttonSendAnyText;
     }
 }
 

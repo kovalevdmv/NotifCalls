@@ -43,6 +43,7 @@
             this.buttonWillCall_5min = new System.Windows.Forms.Button();
             this.buttonWillCall_10min = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.buttonClose = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // labText
@@ -179,12 +180,24 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // buttonClose
+            // 
+            this.buttonClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonClose.Location = new System.Drawing.Point(17, 265);
+            this.buttonClose.Name = "buttonClose";
+            this.buttonClose.Size = new System.Drawing.Size(678, 50);
+            this.buttonClose.TabIndex = 20;
+            this.buttonClose.Text = "Закрыть без ответа";
+            this.buttonClose.UseVisualStyleBackColor = true;
+            this.buttonClose.Click += new System.EventHandler(this.buttonClose_Click);
+            // 
             // showWindosWithMessage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(707, 272);
+            this.ClientSize = new System.Drawing.Size(707, 327);
             this.ControlBox = false;
+            this.Controls.Add(this.buttonClose);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.buttonWillCall_10min);
             this.Controls.Add(this.buttonWillCall_5min);
@@ -227,5 +240,6 @@
         private System.Windows.Forms.Button buttonWillCall_5min;
         private System.Windows.Forms.Button buttonWillCall_10min;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonClose;
     }
 }

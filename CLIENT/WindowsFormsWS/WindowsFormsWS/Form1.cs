@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.WebSockets;
+using System.Speech.Synthesis;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -33,7 +34,7 @@ namespace WindowsFormsWS
 
         }
 
-        public int ver = 1;
+        public int ver = 2;
 
         public settings sett;
 
@@ -111,12 +112,14 @@ namespace WindowsFormsWS
                                 }
                             }
                         }
-                        if (mes.typeMessage == "showWindosWithMessage")
+                        if (mes.typeMessage == "showWindosWithMessage" || mes.typeMessage == "SendAnyTextSpeech" || mes.typeMessage == "SendAnyText")
                         {
                             FormShowMessage = new showWindosWithMessage();
                             FormShowMessage.labelWho.Text = mes.sender;
                             FormShowMessage.labText.Text = mes.text;
                             FormShowMessage.own = this;
+                            FormShowMessage.Speech = mes.typeMessage == "SendAnyTextSpeech";
+                            FormShowMessage.mes = mes;
                             FormShowMessage.Show();
 
                             addHistory($"От {mes.sender} \"{mes.text}\"");
@@ -518,6 +521,31 @@ namespace WindowsFormsWS
         private void button4_Click(object sender, EventArgs e)
         {
             sendCall("Свяжись со мной");
+        }
+
+        private void buttonSendAnyText_Click(object sender, EventArgs e)
+        {
+            var f = new FromSendAnyText();
+            f.own = this;
+            f.Show();
+        }
+
+        public void FormSendAnyTextClosing(FromSendAnyText f)
+        {
+            var cur = GetCurrNick();
+            if (cur.Equals(""))
+            {
+                return;
+            }
+
+            var typeMessage = "SendAnyText";
+
+            if (f.Speech.Checked)
+                    typeMessage = "SendAnyTextSpeech";
+
+            Send(new Message { sender = nick.Text, recipient = cur, typeMessage = typeMessage, text = f.TextSend.Text });
+            f.Close();
+
         }
     }
 }
