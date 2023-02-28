@@ -100,7 +100,9 @@ namespace WindowsFormsWS
             timer1.Stop();
             timer1.Enabled = false;
             respons = "Не ответил. Звонок завершен по таймауту";
+            synth?.Pause();
             own.ClosingFormMessage(this, false);
+            
         }
 
         private void buttonWillCall_Click(object sender, EventArgs e)

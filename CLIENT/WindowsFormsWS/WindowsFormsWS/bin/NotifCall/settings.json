@@ -1,0 +1,8 @@
+{
+  "nick": "noName",
+  "server": "84.42.62.101:8080",
+  "connectStart": false,
+  "timeOutCall": 15,
+  "showMsgBox": true,
+  "countLinesHistory": 10
+}

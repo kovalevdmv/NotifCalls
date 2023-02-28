@@ -44,6 +44,7 @@
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.countLinesHistory = new System.Windows.Forms.MaskedTextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.checkBoxAutoRun = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // nick
@@ -88,7 +89,7 @@
             // 
             // buttonSave
             // 
-            this.buttonSave.Location = new System.Drawing.Point(248, 354);
+            this.buttonSave.Location = new System.Drawing.Point(248, 388);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(75, 23);
             this.buttonSave.TabIndex = 7;
@@ -144,7 +145,7 @@
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(12, 359);
+            this.linkLabel1.Location = new System.Drawing.Point(9, 393);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(197, 13);
             this.linkLabel1.TabIndex = 14;
@@ -169,11 +170,23 @@
             this.label4.TabIndex = 16;
             this.label4.Text = "Количество строк в истории (больше будет очищаться)";
             // 
+            // checkBoxAutoRun
+            // 
+            this.checkBoxAutoRun.AutoSize = true;
+            this.checkBoxAutoRun.Location = new System.Drawing.Point(17, 350);
+            this.checkBoxAutoRun.Name = "checkBoxAutoRun";
+            this.checkBoxAutoRun.Size = new System.Drawing.Size(189, 17);
+            this.checkBoxAutoRun.TabIndex = 17;
+            this.checkBoxAutoRun.Text = "Автозагрузка вместе с windows";
+            this.checkBoxAutoRun.UseVisualStyleBackColor = true;
+            this.checkBoxAutoRun.CheckedChanged += new System.EventHandler(this.checkBoxAutoRun_CheckedChanged);
+            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(336, 394);
+            this.ClientSize = new System.Drawing.Size(336, 420);
+            this.Controls.Add(this.checkBoxAutoRun);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.countLinesHistory);
             this.Controls.Add(this.linkLabel1);
@@ -214,5 +227,6 @@
         private System.Windows.Forms.LinkLabel linkLabel1;
         public System.Windows.Forms.MaskedTextBox countLinesHistory;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox checkBoxAutoRun;
     }
 }

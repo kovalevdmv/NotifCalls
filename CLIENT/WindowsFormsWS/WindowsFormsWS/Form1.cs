@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net.WebSockets;
+using System.Reflection;
 using System.Speech.Synthesis;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -341,9 +344,23 @@ namespace WindowsFormsWS
                 WindowState = FormWindowState.Minimized;
         }
 
+        void SystemEvents_PowerModeChanged(object sender, PowerModeChangedEventArgs e)
+        {
+            if(e.Mode == PowerModes.Suspend)
+            {
+                client.Abort();
+            }
+        }
+
 
         private void Form1_Load(object sender, EventArgs e)
         {
+
+            string programDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string sett_file_json = programDirectory + "\\" + "settings.json";
+
+
+            SystemEvents.PowerModeChanged += SystemEvents_PowerModeChanged;
 
             Text = $"Звонки (версия {ver})";
 
@@ -351,7 +368,7 @@ namespace WindowsFormsWS
             labelErr.Visible = false;
             FormLog = new Log();
 
-            if (!File.Exists("settings.json"))
+            if (!File.Exists(sett_file_json))
             {
 
                 sett = new settings { nick = "NoName", server = "84.42.62.101:8080", timeOutCall = 15, showMsgBox = true, countLinesHistory = 10 };
@@ -361,12 +378,12 @@ namespace WindowsFormsWS
                     Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
                     WriteIndented = true
                 };
-                File.WriteAllText("settings.json", JsonSerializer.Serialize<settings>(sett, options));
+                File.WriteAllText(sett_file_json, JsonSerializer.Serialize<settings>(sett, options));
 
             }
             else
             {
-                String sett_file = File.ReadAllText("settings.json");
+                String sett_file = File.ReadAllText(sett_file_json);
                 sett = JsonSerializer.Deserialize<settings>(sett_file);
             }
 
