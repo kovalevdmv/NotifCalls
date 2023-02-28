@@ -27,6 +27,7 @@ namespace WindowsFormsWS
         public Form1.Message mes;
         bool Speeching = true;
         SpeechSynthesizer synth;
+        bool SendedTypingText = false;
 
         async Task SpeakAsync()
         {
@@ -56,6 +57,8 @@ namespace WindowsFormsWS
             timer1.Start();
             timer1.Interval = own.sett.timeOutCall * 1000;
             labelErr.Visible = false;
+
+            
         }
 
         private void btnStopSound_Click(object sender, EventArgs e)
@@ -107,43 +110,84 @@ namespace WindowsFormsWS
 
         private void buttonWillCall_Click(object sender, EventArgs e)
         {
-            respons = "Сейчас перезвоню";
+            respons = "Сейчас сделаю";
             own.ClosingFormMessage(this);
 
         }
 
         private void buttonWillCall_1min_Click(object sender, EventArgs e)
         {
-            respons = "Перезвоню через 1 мин.";
+            respons = "Сделаю через 1 мин.";
             own.ClosingFormMessage(this);
 
         }
 
         private void buttonWillCall_5min_Click(object sender, EventArgs e)
         {
-            respons = "Перезвоню через 5 мин.";
+            respons = "Сделаю через 5 мин.";
             own.ClosingFormMessage(this);
 
         }
 
         private void buttonWillCall_10min_Click(object sender, EventArgs e)
         {
-            respons = "Перезвоню через 10 мин.";
+            respons = "Сделаю через 10 мин.";
             own.ClosingFormMessage(this);
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            respons = "Отвечу как только так сразу";
-            own.ClosingFormMessage(this);
-        }
+       
 
         private void buttonClose_Click(object sender, EventArgs e)
         {
             respons = "Сообщение закрыто без ответа";
             own.ClosingFormMessage(this);
 
+        }
+
+        private void buttonAnswer_Click(object sender, EventArgs e)
+        {
+            respons = richTextBoxAnswer.Text;
+            own.ClosingFormMessage(this);
+        }
+
+        private void richTextBoxAnswer_TextChanged(object sender, EventArgs e)
+        {
+
+            if (!SendedTypingText)
+            {
+
+                timer1.Enabled = false;
+                timer1.Stop();
+
+                sp.Stop();
+                Speeching = false;
+
+                synth?.Pause();
+
+                own.Send(new Form1.Message { sender = mes.recipient, recipient = mes.sender, typeMessage = "forHistory", text = $"{mes.recipient} начал набирать ответ.." });
+
+                SendedTypingText = true;
+            }
+        }
+
+        private void richTextBoxAnswer_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode==Keys.Enter)
+            {
+                respons = richTextBoxAnswer.Text;
+                own.ClosingFormMessage(this);
+            }
+        }
+
+        private void showWindosWithMessage_Activated(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void showWindosWithMessage_Shown(object sender, EventArgs e)
+        {
+            richTextBoxAnswer.Focus();
         }
     }
 }

@@ -30,8 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormRespons));
             this.labelFrom = new System.Windows.Forms.Label();
-            this.labelAnswer = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.labelAnswer = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // labelFrom
@@ -44,16 +44,6 @@
             this.labelFrom.TabIndex = 0;
             this.labelFrom.Text = "label1";
             // 
-            // labelAnswer
-            // 
-            this.labelAnswer.AutoSize = true;
-            this.labelAnswer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelAnswer.Location = new System.Drawing.Point(8, 51);
-            this.labelAnswer.Name = "labelAnswer";
-            this.labelAnswer.Size = new System.Drawing.Size(51, 20);
-            this.labelAnswer.TabIndex = 1;
-            this.labelAnswer.Text = "label2";
-            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(293, 142);
@@ -64,13 +54,23 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // labelAnswer
+            // 
+            this.labelAnswer.BackColor = System.Drawing.SystemColors.Control;
+            this.labelAnswer.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelAnswer.Location = new System.Drawing.Point(12, 43);
+            this.labelAnswer.Name = "labelAnswer";
+            this.labelAnswer.Size = new System.Drawing.Size(346, 93);
+            this.labelAnswer.TabIndex = 3;
+            this.labelAnswer.Text = "";
+            // 
             // FormRespons
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(370, 180);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.labelAnswer);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.labelFrom);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormRespons";
@@ -85,7 +85,7 @@
         #endregion
 
         public System.Windows.Forms.Label labelFrom;
-        public System.Windows.Forms.Label labelAnswer;
         private System.Windows.Forms.Button button1;
+        public System.Windows.Forms.RichTextBox labelAnswer;
     }
 }

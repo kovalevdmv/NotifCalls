@@ -89,7 +89,7 @@
             this.TableClients.Location = new System.Drawing.Point(12, 54);
             this.TableClients.Name = "TableClients";
             this.TableClients.ReadOnly = true;
-            this.TableClients.Size = new System.Drawing.Size(577, 251);
+            this.TableClients.Size = new System.Drawing.Size(368, 255);
             this.TableClients.TabIndex = 8;
             this.TableClients.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.TableClients_CellEnter);
             this.TableClients.Click += new System.EventHandler(this.TableClients_Click);
@@ -99,7 +99,7 @@
             this.nickname.HeaderText = "Имя";
             this.nickname.Name = "nickname";
             this.nickname.ReadOnly = true;
-            this.nickname.Width = 400;
+            this.nickname.Width = 200;
             // 
             // imageList1
             // 
@@ -117,7 +117,7 @@
             // btnToTray
             // 
             this.btnToTray.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnToTray.Location = new System.Drawing.Point(595, 27);
+            this.btnToTray.Location = new System.Drawing.Point(386, 29);
             this.btnToTray.Name = "btnToTray";
             this.btnToTray.Size = new System.Drawing.Size(206, 23);
             this.btnToTray.TabIndex = 10;
@@ -140,9 +140,9 @@
             this.Status1,
             this.Status3,
             this.Status2});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 398);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 402);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(813, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(604, 22);
             this.statusStrip1.TabIndex = 16;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -170,7 +170,7 @@
             this.менюToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(813, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(604, 24);
             this.menuStrip1.TabIndex = 17;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -208,7 +208,7 @@
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(595, 77);
+            this.button1.Location = new System.Drawing.Point(386, 107);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(206, 23);
             this.button1.TabIndex = 18;
@@ -219,7 +219,7 @@
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(595, 106);
+            this.button2.Location = new System.Drawing.Point(386, 136);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(206, 23);
             this.button2.TabIndex = 19;
@@ -230,7 +230,7 @@
             // button3
             // 
             this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button3.Location = new System.Drawing.Point(595, 282);
+            this.button3.Location = new System.Drawing.Point(386, 286);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(206, 23);
             this.button3.TabIndex = 20;
@@ -256,10 +256,10 @@
             this.textHistory.BackColor = System.Drawing.SystemColors.Info;
             this.textHistory.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textHistory.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textHistory.Location = new System.Drawing.Point(12, 311);
+            this.textHistory.Location = new System.Drawing.Point(12, 315);
             this.textHistory.Name = "textHistory";
             this.textHistory.ReadOnly = true;
-            this.textHistory.Size = new System.Drawing.Size(577, 77);
+            this.textHistory.Size = new System.Drawing.Size(580, 77);
             this.textHistory.TabIndex = 22;
             this.textHistory.Text = "";
             this.textHistory.WordWrap = false;
@@ -267,7 +267,7 @@
             // button4
             // 
             this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button4.Location = new System.Drawing.Point(595, 135);
+            this.button4.Location = new System.Drawing.Point(386, 165);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(206, 23);
             this.button4.TabIndex = 23;
@@ -277,7 +277,8 @@
             // 
             // buttonSendAnyText
             // 
-            this.buttonSendAnyText.Location = new System.Drawing.Point(595, 164);
+            this.buttonSendAnyText.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonSendAnyText.Location = new System.Drawing.Point(386, 194);
             this.buttonSendAnyText.Name = "buttonSendAnyText";
             this.buttonSendAnyText.Size = new System.Drawing.Size(206, 23);
             this.buttonSendAnyText.TabIndex = 24;
@@ -289,7 +290,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(813, 420);
+            this.ClientSize = new System.Drawing.Size(604, 424);
             this.Controls.Add(this.buttonSendAnyText);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.textHistory);
@@ -310,6 +311,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Звонки";
             this.TopMost = true;
+            this.Activated += new System.EventHandler(this.Form1_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.TableClients)).EndInit();
@@ -325,7 +327,7 @@
         #endregion
 
         private System.Windows.Forms.Button buttonConnect;
-        private System.Windows.Forms.TextBox nick;
+        public System.Windows.Forms.TextBox nick;
         private System.Windows.Forms.DataGridView TableClients;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
@@ -346,8 +348,8 @@
         private System.Windows.Forms.Label labelErr;
         private System.Windows.Forms.RichTextBox textHistory;
         private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nickname;
         private System.Windows.Forms.Button buttonSendAnyText;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nickname;
     }
 }
 

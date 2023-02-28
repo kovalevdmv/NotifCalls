@@ -37,7 +37,7 @@ namespace WindowsFormsWS
 
         }
 
-        public int ver = 2;
+        public int ver = 3;
 
         public settings sett;
 
@@ -50,7 +50,8 @@ namespace WindowsFormsWS
             {
                 textHistory.Text = "";
             }
-            textHistory.Text += $"[{textHistory.Lines.Count()}][{DateTime.Now}] {s}\n";
+            //textHistory.Text += $"[{textHistory.Lines.Count()}][{DateTime.Now.ToString("HH:mm")}] {s}\n";
+            textHistory.Text += $"[{DateTime.Now.ToString("HH:mm")}] {s}\n";
 
             textHistory.SelectionStart = textHistory.TextLength;
             textHistory.ScrollToCaret();
@@ -160,6 +161,10 @@ namespace WindowsFormsWS
                             Send(new Message { sender = nick.Text, recipient = mes.sender, typeMessage = "showWindosWithMessage_respons", text = "CloseWindows" });
 
                         }
+                        if (mes.typeMessage == "forHistory")
+                        {
+                            addHistory(mes.text);
+                        }
                         addLog(message);
                     }
                 }
@@ -256,7 +261,7 @@ namespace WindowsFormsWS
             await RunAsync(uri, cancellationTokenSource.Token);
         }
 
-        async Task Send(Message mess)
+        public async Task Send(Message mess)
         {
             if (client.State == WebSocketState.Open)
             {
@@ -329,19 +334,25 @@ namespace WindowsFormsWS
         private void btnToTray_Click(object sender, EventArgs e)
         {
             WindowState = FormWindowState.Minimized;
-            // прячем наше окно из панели
             this.ShowInTaskbar = false;
-            // делаем нашу иконку в трее активной
-            notifyIcon1.Visible = true;
         }
 
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            this.ShowInTaskbar = !this.ShowInTaskbar;
+
             if (this.ShowInTaskbar)
-                WindowState = FormWindowState.Normal;
-            else
+            {
                 WindowState = FormWindowState.Minimized;
+                this.ShowInTaskbar = false; 
+            }
+            else
+            {
+                this.ShowInTaskbar = true;
+                WindowState = FormWindowState.Normal;
+            }
+            
+
+
         }
 
         void SystemEvents_PowerModeChanged(object sender, PowerModeChangedEventArgs e)
@@ -563,6 +574,11 @@ namespace WindowsFormsWS
             Send(new Message { sender = nick.Text, recipient = cur, typeMessage = typeMessage, text = f.TextSend.Text });
             f.Close();
 
+        }
+
+        private void Form1_Activated(object sender, EventArgs e)
+        {
+            
         }
     }
 }
