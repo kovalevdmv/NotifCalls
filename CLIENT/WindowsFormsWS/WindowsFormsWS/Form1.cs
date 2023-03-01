@@ -37,7 +37,7 @@ namespace WindowsFormsWS
 
         }
 
-        public int ver = 3;
+        public int ver = 4;
 
         public settings sett;
 

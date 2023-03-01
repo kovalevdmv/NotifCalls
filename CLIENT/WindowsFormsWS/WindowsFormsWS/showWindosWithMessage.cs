@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Media;
+using System.Reflection;
 using System.Speech.Synthesis;
 using System.Text;
 using System.Threading;
@@ -41,15 +43,21 @@ namespace WindowsFormsWS
             }
         }
 
+
+
         private void showWindosWithMessage_Load(object sender, EventArgs e)
         {
-            sp = new SoundPlayer("ring1.wav");
+
+            string programDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string ring1_wav = programDirectory + "\\" + "ring1.wav";
+
+            sp = new SoundPlayer(ring1_wav);
+
             if (!Speech)
             {
                 sp.Load();
                 sp.PlayLooping();
             } else {
-
                 SpeakAsync();
             }
 
