@@ -45,6 +45,8 @@
             this.countLinesHistory = new System.Windows.Forms.MaskedTextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.checkBoxAutoRun = new System.Windows.Forms.CheckBox();
+            this.labelErrAutoRun = new System.Windows.Forms.Label();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.SuspendLayout();
             // 
             // nick
@@ -173,7 +175,7 @@
             // checkBoxAutoRun
             // 
             this.checkBoxAutoRun.AutoSize = true;
-            this.checkBoxAutoRun.Location = new System.Drawing.Point(17, 350);
+            this.checkBoxAutoRun.Location = new System.Drawing.Point(17, 335);
             this.checkBoxAutoRun.Name = "checkBoxAutoRun";
             this.checkBoxAutoRun.Size = new System.Drawing.Size(189, 17);
             this.checkBoxAutoRun.TabIndex = 17;
@@ -181,11 +183,32 @@
             this.checkBoxAutoRun.UseVisualStyleBackColor = true;
             this.checkBoxAutoRun.CheckedChanged += new System.EventHandler(this.checkBoxAutoRun_CheckedChanged);
             // 
+            // labelErrAutoRun
+            // 
+            this.labelErrAutoRun.AutoSize = true;
+            this.labelErrAutoRun.ForeColor = System.Drawing.Color.Red;
+            this.labelErrAutoRun.Location = new System.Drawing.Point(14, 355);
+            this.labelErrAutoRun.Name = "labelErrAutoRun";
+            this.labelErrAutoRun.Size = new System.Drawing.Size(35, 13);
+            this.labelErrAutoRun.TabIndex = 18;
+            this.labelErrAutoRun.Text = "label5";
+            this.labelErrAutoRun.Click += new System.EventHandler(this.labelErrAutoRun_Click);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Location = new System.Drawing.Point(0, 419);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(334, 22);
+            this.statusStrip1.TabIndex = 19;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(336, 420);
+            this.ClientSize = new System.Drawing.Size(334, 441);
+            this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.labelErrAutoRun);
             this.Controls.Add(this.checkBoxAutoRun);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.countLinesHistory);
@@ -228,5 +251,7 @@
         public System.Windows.Forms.MaskedTextBox countLinesHistory;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.CheckBox checkBoxAutoRun;
+        private System.Windows.Forms.Label labelErrAutoRun;
+        private System.Windows.Forms.StatusStrip statusStrip1;
     }
 }

@@ -27,6 +27,12 @@ namespace WindowsFormsWS
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
+            if (textBoxNick.Text.ToLower() == "noname")
+            {
+                MessageBox.Show("Имя не должно noName");
+                return;
+            }
+
             SetAutorunValue(checkBoxAutoRun.Checked);
 
             own.ClosingFormSettings(this);
@@ -34,6 +40,9 @@ namespace WindowsFormsWS
 
         private void FormSettings_Load(object sender, EventArgs e)
         {
+
+            labelErrAutoRun.Visible = false;
+
             string ExePath = System.Windows.Forms.Application.ExecutablePath;
 
             string name = "NotifCall";
@@ -42,7 +51,12 @@ namespace WindowsFormsWS
 
             try
             {
-                checkBoxAutoRun.Checked = reg.GetValue(name) != null;
+                checkBoxAutoRun.Checked = reg.GetValue(name).ToString() == ExePath;
+                if (reg.GetValue(name) != null && reg.GetValue(name).ToString() != ExePath)
+                {
+                    labelErrAutoRun.Text = "Автозапуск был настроек на другой путь.\nВозможно сменился каталог программы.\nНадо включить флаг еще раз.";
+                    labelErrAutoRun.Visible = true;
+                }
             } catch { 
             }
 
@@ -81,6 +95,11 @@ namespace WindowsFormsWS
         private void checkBoxAutoRun_CheckedChanged(object sender, EventArgs e)
         {
             
+        }
+
+        private void labelErrAutoRun_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

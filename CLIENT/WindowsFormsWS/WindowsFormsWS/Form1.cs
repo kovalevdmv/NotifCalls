@@ -37,7 +37,7 @@ namespace WindowsFormsWS
 
         }
 
-        public int ver = 4;
+        public int ver = 5;
 
         public settings sett;
 
@@ -276,7 +276,11 @@ namespace WindowsFormsWS
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            if (nick.Text.ToLower() == "noname")
+            {
+                MessageBox.Show("Имя не должно noName");
+                return;
+            }
 
             if (nick.Text.Equals(""))
             {
@@ -343,21 +347,21 @@ namespace WindowsFormsWS
             if (this.ShowInTaskbar)
             {
                 WindowState = FormWindowState.Minimized;
-                this.ShowInTaskbar = false; 
+                this.ShowInTaskbar = false;
             }
             else
             {
                 this.ShowInTaskbar = true;
                 WindowState = FormWindowState.Normal;
             }
-            
+
 
 
         }
 
         void SystemEvents_PowerModeChanged(object sender, PowerModeChangedEventArgs e)
         {
-            if(e.Mode == PowerModes.Suspend)
+            if (e.Mode == PowerModes.Suspend)
             {
                 client.Abort();
             }
@@ -469,7 +473,11 @@ namespace WindowsFormsWS
             f.Close();
 
             if (needToRestart)
-                client.Abort();
+                if (client == null && sett.connectStart)
+                    Connect();
+                else
+                    client?.Abort();
+
         }
 
         private void настройкиToolStripMenuItem_Click(object sender, EventArgs e)
@@ -569,7 +577,7 @@ namespace WindowsFormsWS
             var typeMessage = "SendAnyText";
 
             if (f.Speech.Checked)
-                    typeMessage = "SendAnyTextSpeech";
+                typeMessage = "SendAnyTextSpeech";
 
             Send(new Message { sender = nick.Text, recipient = cur, typeMessage = typeMessage, text = f.TextSend.Text });
             f.Close();
@@ -578,7 +586,7 @@ namespace WindowsFormsWS
 
         private void Form1_Activated(object sender, EventArgs e)
         {
-            
+
         }
     }
 }
