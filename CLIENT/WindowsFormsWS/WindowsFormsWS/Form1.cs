@@ -13,6 +13,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace WindowsFormsWS
 {
@@ -20,6 +21,8 @@ namespace WindowsFormsWS
     {
 
         showWindosWithMessage FormShowMessage;
+
+        FromSendAnyText FormAnyText;
 
         public class settings
         {
@@ -37,7 +40,7 @@ namespace WindowsFormsWS
 
         }
 
-        public int ver = 5;
+        public int ver = 8;
 
         public settings sett;
 
@@ -87,12 +90,17 @@ namespace WindowsFormsWS
 
         public async Task ReceiveLoopAsync(CancellationToken cancellationToken)
         {
+
+            string all_mess = "";
+
             while (!cancellationToken.IsCancellationRequested)
             {
                 try
                 {
-                    var buffer = new byte[1024];
+                    int length_buf = 1024;
+                    var buffer = new byte[length_buf];
                     var result = await client.ReceiveAsync(new ArraySegment<byte>(buffer), cancellationToken);
+                    
                     if (result.MessageType == WebSocketMessageType.Close)
                     {
                         addLog("Connection closed by server");
@@ -101,7 +109,12 @@ namespace WindowsFormsWS
                     if (result.MessageType == WebSocketMessageType.Text)
                     {
                         var message = Encoding.UTF8.GetString(buffer, 0, result.Count);
-                        var mes = JsonSerializer.Deserialize<Message>(message);
+                        all_mess += message;
+                        if (result.EndOfMessage == false)
+                            continue;
+
+                        var mes = JsonSerializer.Deserialize<Message>(all_mess);
+                        all_mess = "";
                         if (mes.sender == "server")
                         {
                             if (mes.typeMessage == "clientsList")
@@ -116,30 +129,64 @@ namespace WindowsFormsWS
                                 }
                             }
                         }
-                        if (mes.typeMessage == "showWindosWithMessage" || mes.typeMessage == "SendAnyTextSpeech" || mes.typeMessage == "SendAnyText")
+                        if (mes.typeMessage == "showWindosWithMessage" || mes.typeMessage == "SendAnyTextSpeech" || mes.typeMessage == "SendAnyText" || mes.typeMessage == "SendAnyTextAudioMessage")
                         {
                             FormShowMessage = new showWindosWithMessage();
                             FormShowMessage.labelWho.Text = mes.sender;
-                            FormShowMessage.labText.Text = mes.text;
+                            if (mes.typeMessage == "SendAnyTextAudioMessage")
+                            {
+                                AudioMessage AMess = JsonSerializer.Deserialize<AudioMessage>(mes.text);
+                                FormShowMessage.labText.Text = $"(Голосовое сообщение)\n{AMess.text}";
+                                FormShowMessage.recordedAudio = Convert.FromBase64String(AMess.AudioData);
+
+                            }
+                            else
+                            {
+                                FormShowMessage.labText.Text = mes.text;
+                            }
+
                             FormShowMessage.own = this;
                             FormShowMessage.Speech = mes.typeMessage == "SendAnyTextSpeech";
                             FormShowMessage.mes = mes;
                             FormShowMessage.Show();
 
-                            addHistory($"От {mes.sender} \"{mes.text}\"");
+                            addHistory($"От {mes.sender} \"{FormShowMessage.labText.Text}\"");
 
                             Send(new Message { sender = nick.Text, recipient = mes.sender, typeMessage = "showWindosWithMessage_respons", text = "OpenWindows" });
                         }
-                        if (mes.typeMessage == "text")
+                        if (mes.typeMessage == "text" || mes.typeMessage == "textSpeech" || mes.typeMessage == "textAudioMessage")
                         {
-                            var respons = $"{mes.sender} ответил \"{mes.text}\"";
+                            var text = mes.text;
+
+                            if (mes.typeMessage == "textAudioMessage")
+                            {
+                                AudioMessage AMess = JsonSerializer.Deserialize<AudioMessage>(mes.text);
+                                text =  $"(Голосовое сообщение)\n{AMess.text}";
+                            }
+
+
+
                             if (sett.showMsgBox)
                             {
                                 var f = new FormRespons();
+                                f.Speech = mes.typeMessage == "textSpeech";
+
+                                if (mes.typeMessage == "textAudioMessage")
+                                {
+                                    AudioMessage AMess = JsonSerializer.Deserialize<AudioMessage>(mes.text);
+                                    text = $"(Голосовое сообщение)\n{AMess.text}";
+                                    f.recordedAudio = Convert.FromBase64String(AMess.AudioData);
+
+                                }
+                                
                                 f.labelFrom.Text = $"Ответ от {mes.sender}";
-                                f.labelAnswer.Text = mes.text;
+                                f.labelAnswer.Text = text;
+                                f.sender = mes.sender;
+                                f.text = text;
                                 f.Show();
                             }
+
+                            var respons = $"{mes.sender} ответил \"{text}\"";
 
                             ChangeStatus(respons);
                         }
@@ -237,6 +284,15 @@ namespace WindowsFormsWS
 
         }
 
+        public class AudioMessage
+        {
+            public string text { get; set; }
+            public string AudioData { get; set; }
+
+        }
+
+
+
         public Log FormLog;
 
         public Form1()
@@ -246,6 +302,7 @@ namespace WindowsFormsWS
 
         void addLog(string s)
         {
+            return;
             FormLog.TextLog.Text += $"[{DateTime.Now}] {s}\n";
         }
 
@@ -434,12 +491,29 @@ namespace WindowsFormsWS
 
         public async void ClosingFormMessage(showWindosWithMessage form, bool closeFrom = true)
         {
+            var typeMessage = "text";
+            var text = form.respons;
+
+            if (form.Speech) // если было озвучка текст, ответить так же озвучкой
+            {
+                typeMessage = "textSpeech";
+            }
+
+            if (form.sr.recordedAudio != null) // есть данные аудио
+            {
+                typeMessage = "textAudioMessage";
+                text = Serialize<AudioMessage>(new AudioMessage { text = text, AudioData = Convert.ToBase64String(form.sr.recordedAudio) });
+            }
+
             await Send(new Message { sender = nick.Text, recipient = form.labelWho.Text, typeMessage = "showWindosWithMessage_respons", text = "CloseWindows" });
 
-            await Send(new Message { sender = nick.Text, recipient = form.labelWho.Text, typeMessage = "text", text = form.respons });
+            await Send(new Message { sender = nick.Text, recipient = form.labelWho.Text, typeMessage = typeMessage, text = text });
 
             if (closeFrom)
+            {
+                form.Dispose();
                 form.Close();
+            }
 
             addHistory($"Твой ответ \"{form.respons}\"");
 
@@ -449,6 +523,16 @@ namespace WindowsFormsWS
         {
 
 
+        }
+
+        string Serialize<T>(T data)
+        {
+            JsonSerializerOptions options = new JsonSerializerOptions
+            {
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                WriteIndented = true
+            };
+            return JsonSerializer.Serialize<T>(data, options);
         }
 
         public void ClosingFormSettings(FormSettings f)
@@ -561,32 +645,72 @@ namespace WindowsFormsWS
 
         private void buttonSendAnyText_Click(object sender, EventArgs e)
         {
-            var f = new FromSendAnyText();
-            f.own = this;
-            f.Show();
+
+            var cur = GetCurrNick();
+            if (cur.Equals(""))
+                return;
+
+            if (IsFormOpen(typeof(FromSendAnyText)))
+            {
+                FormAnyText.Activate();
+            }
+            else
+            {
+
+                FormAnyText = new FromSendAnyText();
+                FormAnyText.own = this;
+                FormAnyText.recipient.Text = cur;
+                FormAnyText.Show();
+
+            }
+            
         }
 
         public void FormSendAnyTextClosing(FromSendAnyText f)
         {
-            var cur = GetCurrNick();
-            if (cur.Equals(""))
-            {
-                return;
-            }
+
+            string text = f.TextSend.Text;
 
             var typeMessage = "SendAnyText";
 
             if (f.Speech.Checked)
                 typeMessage = "SendAnyTextSpeech";
 
-            Send(new Message { sender = nick.Text, recipient = cur, typeMessage = typeMessage, text = f.TextSend.Text });
+            if (f.sr.recordedAudio != null) // есть данные аудио
+            {
+                typeMessage = "SendAnyTextAudioMessage";
+                text = Serialize<AudioMessage>(new AudioMessage { text = f.TextSend.Text, AudioData = Convert.ToBase64String(f.sr.recordedAudio) });
+            }
+
+            Send(new Message { sender = nick.Text, recipient = f.recipient.Text, typeMessage = typeMessage, text = text });
+            f.Dispose();
             f.Close();
 
         }
 
         private void Form1_Activated(object sender, EventArgs e)
         {
+            if (IsFormOpen(typeof(FromSendAnyText)))
+            {
+                FormAnyText.Activate();
+            }
+            if (IsFormOpen(typeof(showWindosWithMessage)))
+            {
+                FormShowMessage.Activate();
+            }
 
+        }
+
+        bool IsFormOpen(Type formType)
+        {
+            foreach (Form form in System.Windows.Forms.Application.OpenForms)
+            {
+                if (form.GetType() == formType)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
