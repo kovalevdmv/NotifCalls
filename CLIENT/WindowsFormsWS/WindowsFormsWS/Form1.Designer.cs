@@ -54,9 +54,14 @@
             this.textHistory = new System.Windows.Forms.RichTextBox();
             this.button4 = new System.Windows.Forms.Button();
             this.buttonSendAnyText = new System.Windows.Forms.Button();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.настройкиToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.закрытьПрограммуToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.показатьскрытьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.TableClients)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonConnect
@@ -109,8 +114,9 @@
             // 
             // notifyIcon1
             // 
+            this.notifyIcon1.ContextMenuStrip = this.contextMenuStrip1;
             this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
-            this.notifyIcon1.Text = "Звонки";
+            this.notifyIcon1.Text = "Двойное нажатие - показать/скрыть";
             this.notifyIcon1.Visible = true;
             this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
             // 
@@ -286,6 +292,37 @@
             this.buttonSendAnyText.UseVisualStyleBackColor = true;
             this.buttonSendAnyText.Click += new System.EventHandler(this.buttonSendAnyText_Click);
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.настройкиToolStripMenuItem1,
+            this.показатьскрытьToolStripMenuItem,
+            this.закрытьПрограммуToolStripMenuItem1});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(187, 70);
+            this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
+            // 
+            // настройкиToolStripMenuItem1
+            // 
+            this.настройкиToolStripMenuItem1.Name = "настройкиToolStripMenuItem1";
+            this.настройкиToolStripMenuItem1.Size = new System.Drawing.Size(186, 22);
+            this.настройкиToolStripMenuItem1.Text = "Настройки";
+            this.настройкиToolStripMenuItem1.Click += new System.EventHandler(this.настройкиToolStripMenuItem1_Click);
+            // 
+            // закрытьПрограммуToolStripMenuItem1
+            // 
+            this.закрытьПрограммуToolStripMenuItem1.Name = "закрытьПрограммуToolStripMenuItem1";
+            this.закрытьПрограммуToolStripMenuItem1.Size = new System.Drawing.Size(186, 22);
+            this.закрытьПрограммуToolStripMenuItem1.Text = "Закрыть программу";
+            this.закрытьПрограммуToolStripMenuItem1.Click += new System.EventHandler(this.закрытьПрограммуToolStripMenuItem1_Click);
+            // 
+            // показатьскрытьToolStripMenuItem
+            // 
+            this.показатьскрытьToolStripMenuItem.Name = "показатьскрытьToolStripMenuItem";
+            this.показатьскрытьToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.показатьскрытьToolStripMenuItem.Text = "Показать/скрыть";
+            this.показатьскрытьToolStripMenuItem.Click += new System.EventHandler(this.показатьскрытьToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -319,6 +356,7 @@
             this.statusStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -350,6 +388,10 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button buttonSendAnyText;
         private System.Windows.Forms.DataGridViewTextBoxColumn nickname;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem настройкиToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem закрытьПрограммуToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem показатьскрытьToolStripMenuItem;
     }
 }
 

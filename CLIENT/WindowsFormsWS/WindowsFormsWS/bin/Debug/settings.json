@@ -2,7 +2,7 @@
   "nick": "Ковалев",
   "server": "84.42.62.101:8080",
   "connectStart": true,
-  "timeOutCall": 30,
+  "timeOutCall": 15,
   "showMsgBox": true,
-  "countLinesHistory": 99
+  "countLinesHistory": 10
 }

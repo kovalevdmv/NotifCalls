@@ -40,7 +40,7 @@ namespace WindowsFormsWS
 
         }
 
-        public int ver = 8;
+        public int ver = 9;
 
         public settings sett;
 
@@ -398,9 +398,8 @@ namespace WindowsFormsWS
             this.ShowInTaskbar = false;
         }
 
-        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        void trayDBClick()
         {
-
             if (this.ShowInTaskbar)
             {
                 WindowState = FormWindowState.Minimized;
@@ -411,7 +410,13 @@ namespace WindowsFormsWS
                 this.ShowInTaskbar = true;
                 WindowState = FormWindowState.Normal;
             }
+        }
 
+        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+
+
+            trayDBClick();
 
 
         }
@@ -711,6 +716,27 @@ namespace WindowsFormsWS
                 }
             }
             return false;
+        }
+
+        private void настройкиToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            настройкиToolStripMenuItem_Click(sender, e);
+        }
+
+        private void contextMenuStrip1_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            
+        }
+
+        private void закрытьПрограммуToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            ClosingByButtonClose = true;
+            Close();
+        }
+
+        private void показатьскрытьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            trayDBClick();
         }
     }
 }
