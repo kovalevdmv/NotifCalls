@@ -154,7 +154,7 @@ namespace WindowsFormsWS
             sp.Stop();
             timer1.Stop();
             timer1.Enabled = false;
-            respons = "Не ответил. Звонок завершен по таймауту";
+            respons = "Не ответил. Звонок завершен по тайм-ауту";
             synth?.Pause();
             own.ClosingFormMessage(this, false);
 

@@ -24,6 +24,8 @@ namespace WindowsFormsWS
 
         FromSendAnyText FormAnyText;
 
+        string sett_file_json;
+
         public class settings
         {
             public string nick { get; set; }
@@ -40,7 +42,7 @@ namespace WindowsFormsWS
 
         }
 
-        public int ver = 9;
+        public int ver = 10;
 
         public settings sett;
 
@@ -434,7 +436,7 @@ namespace WindowsFormsWS
         {
 
             string programDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string sett_file_json = programDirectory + "\\" + "settings.json";
+            sett_file_json = programDirectory + "\\" + "settings.json";
 
 
             SystemEvents.PowerModeChanged += SystemEvents_PowerModeChanged;
@@ -557,7 +559,7 @@ namespace WindowsFormsWS
                 Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
                 WriteIndented = true
             };
-            File.WriteAllText("settings.json", JsonSerializer.Serialize<settings>(sett, options));
+            File.WriteAllText(sett_file_json, JsonSerializer.Serialize<settings>(sett, options));
 
             f.Close();
 
