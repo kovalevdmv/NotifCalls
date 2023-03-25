@@ -1,0 +1,10 @@
+[Unit]
+Description=Server NotifCall
+Requires=network.target
+
+[Service]
+ExecStart=/opt/goWS/server
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
